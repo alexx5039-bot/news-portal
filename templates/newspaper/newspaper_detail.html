@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ newspaper.title }}</h2>
+
+    <p class="text-muted">
+        🗂 Topic: <strong>{{ newspaper.topic.name }}</strong><br>
+        📅 Published: {{ newspaper.published_date }}
+    </p>
+
+    <hr>
+
+    <p>{{ newspaper.content }}</p>
+
+    <hr>
+
+    <h5>✍️ Editors</h5>
+    <ul>
+        {% for redactor in newspaper.publishers.all %}
+            <li>{{ redactor.first_name }} {{ redactor.last_name }}</li>
+        {% empty %}
+            <li>No editors assigned</li>
+        {% endfor %}
+    </ul>
+
+    <div class="mt-4">
+        <a href="{% url 'newspaper:newspaper-list' %}" class="btn btn-secondary">
+            ← Back
+        </a>
+
+        <a href="{% url 'newspaper:newspaper-update' newspaper.pk %}" class="btn btn-warning">
+            ✏️ Edit
+        </a>
+
+        <a href="{% url 'newspaper:newspaper-delete' newspaper.pk %}" class="btn btn-danger">
+            🗑 Delete
+        </a>
+    </div>
+</div>
+{% endblock %}

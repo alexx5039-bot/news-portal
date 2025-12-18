@@ -1,0 +1,48 @@
+{% load static %}
+
+<div class="sidebar bg-dark text-white p-3">
+    <h4 class="mb-4">📰 News Portal</h4>
+
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="{% url 'newspaper:newspaper-list' %}" class="nav-link text-white">
+                Newspapers
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="#" class="nav-link text-white">
+                Topics
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="#" class="nav-link text-white">
+                Redactors
+            </a>
+        </li>
+
+        {% if user.is_staff %}
+        <li class="nav-item">
+            <a href="/admin/" class="nav-link text-white">
+                Admin
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+
+    <hr>
+
+    {% if user.is_authenticated %}
+        <div>
+            👤 {{ user.username }}<br>
+            <a href="{% url 'logout' %}" class="text-white text-decoration-none">
+                Logout
+            </a>
+        </div>
+    {% else %}
+        <a href="{% url 'login' %}" class="text-white text-decoration-none">
+            Login
+        </a>
+    {% endif %}
+</div>
