@@ -1,0 +1,34 @@
+body {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+
+.sidebar {
+    width: 240px;
+    min-height: 100vh;
+    background-color: #212529;
+}
+
+.sidebar a {
+    color: #dee2e6;
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    color: #ffffff;
+}
+
+
+.home-hero {
+    min-height: calc(100vh - 2rem);
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.65),
+            rgba(0, 0, 0, 0.65)
+        ),
+        url("https://images.unsplash.com/photo-1504711434969-e33886168f5c");
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+}

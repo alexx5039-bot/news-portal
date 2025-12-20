@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Delete topic{% endblock %}
+
+{% block content %}
+<div class="col-md-6 mx-auto">
+    <div class="card border-danger shadow-sm">
+        <div class="card-body">
+            <h3 class="text-danger mb-3">
+                Delete topic
+            </h3>
+
+            <p>
+                Are you sure you want to delete topic
+                <strong>"{{ topic.name }}"</strong>?
+            </p>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'newspaper:topic-detail' topic.pk %}" class="btn btn-secondary">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-danger">
+                        Yes, delete
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
