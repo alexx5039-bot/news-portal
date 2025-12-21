@@ -29,7 +29,9 @@ class NewspaperListView(LoginRequiredMixin, generic.ListView):
             .prefetch_related("publishers")
             .order_by("-published_date")
         )
-        query = self.request.GET.get("q")
+        query = self.request.GET.get("q", "").strip()
+        topic_id = self.request.GET.get("topic")
+        redactor_id = self.request.GET.get("redactor")
 
         if query:
             queryset = queryset.filter(
@@ -37,7 +39,18 @@ class NewspaperListView(LoginRequiredMixin, generic.ListView):
                 Q(content__icontains=query) |
                 Q(topic__name__icontains=query)
             )
-        return queryset
+        if topic_id:
+            queryset = queryset.filter(topic_id=topic_id)
+        if redactor_id:
+            queryset = queryset.filter(publishers__id=redactor_id)
+
+        return queryset.distinct()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["topics"] = Topic.objects.all()
+        context["redactors"] = User.objects.all().order_by("username")
+        return context
 
 class NewspaperDetailView(LoginRequiredMixin, generic.DetailView):
     model = Newspaper
