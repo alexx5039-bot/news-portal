@@ -8,19 +8,22 @@ from .models import Newspaper
 
 User = get_user_model()
 
+
 class RedactorCreationForm(UserCreationForm):
     years_of_experience = forms.IntegerField(min_value=0)
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("username",
-                  "first_name",
-                  "last_name",
-                  "email",
-                  "years_of_experience",
-                  "password1",
-                  "password2"
+        fields = (
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "years_of_experience",
+            "password1",
+            "password2"
         )
+
     def clean_years_of_experience(self):
         years = self.cleaned_data.get("years_of_experience")
 
@@ -35,11 +38,12 @@ class RedactorUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ("username",
-                  "first_name",
-                  "last_name",
-                  "email",
-                  "years_of_experience",
+        fields = (
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "years_of_experience",
         )
 
     def clean_years_of_experience(self):

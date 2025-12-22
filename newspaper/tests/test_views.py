@@ -1,11 +1,10 @@
-from http.client import responses
-
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from newspaper.models import Topic, Newspaper
 
 User = get_user_model()
+
 
 class BaseViewTest(TestCase):
     def setUp(self):
@@ -150,7 +149,6 @@ class NewspaperListViewTest(BaseViewTest):
 
         self.assertContains(response, correct_news.title)
         self.assertNotContains(response, wrong_news.title)
-
 
 
 class LoginRequiredTest(TestCase):

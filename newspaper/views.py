@@ -17,6 +17,7 @@ User = get_user_model()
 class HomeView(LoginRequiredMixin, generic.TemplateView):
     template_name = "newspaper/home.html"
 
+
 class NewspaperListView(LoginRequiredMixin, generic.ListView):
     model = Newspaper
     context_object_name = "newspaper_list"
@@ -52,6 +53,7 @@ class NewspaperListView(LoginRequiredMixin, generic.ListView):
         context["redactors"] = User.objects.all().order_by("username")
         return context
 
+
 class NewspaperDetailView(LoginRequiredMixin, generic.DetailView):
     model = Newspaper
     template_name = "newspaper/newspaper_detail.html"
@@ -64,11 +66,13 @@ class NewspaperDetailView(LoginRequiredMixin, generic.DetailView):
             .prefetch_related("publishers")
         )
 
+
 class NewspaperCreateView(LoginRequiredMixin, generic.CreateView):
     model = Newspaper
     form_class = NewspaperForm
     template_name = "newspaper/newspaper_form.html"
     success_url = reverse_lazy("newspaper:newspaper-list")
+
 
 class NewspaperUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Newspaper
@@ -148,7 +152,7 @@ class RedactorListView(LoginRequiredMixin, generic.ListView):
                 Q(username__icontains=query) |
                 Q(first_name__icontains=query) |
                 Q(last_name__icontains=query)
-           )
+            )
         return queryset
 
 

@@ -7,6 +7,7 @@ from newspaper.models import Topic
 
 User = get_user_model()
 
+
 class RedactorCreationFormTest(TestCase):
 
     def test_form_valid(self):

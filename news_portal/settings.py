@@ -1,19 +1,18 @@
-
-
 from pathlib import Path
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
-SECRET_KEY = 'django-insecure-4nm4uv)gxc*b(d$q(e0do7!r$5%+ui18i2b%$3ar+vmx^+9zxc'
+SECRET_KEY = (
+    'django-insecure-4nm4uv)gxc*'
+    'b(d$q(e0do7!r$5%+ui18i2b%$3ar+vmx^+9zxc'
+)
 
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
@@ -43,8 +42,7 @@ ROOT_URLCONF = 'news_portal.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -59,7 +57,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'news_portal.wsgi.application'
 
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -70,22 +67,24 @@ DATABASES = {
 AUTH_USER_MODEL = "newspaper.Redactor"
 
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.'
+                'NumericPasswordValidator',
     },
 ]
-
 
 
 LANGUAGE_CODE = 'en-us'
@@ -95,8 +94,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
-
 
 STATIC_URL = 'static/'
 
