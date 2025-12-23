@@ -1,18 +1,15 @@
+import os
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
-SECRET_KEY = (
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY',
     'django-insecure-4nm4uv)gxc*'
     'b(d$q(e0do7!r$5%+ui18i2b%$3ar+vmx^+9zxc'
 )
 
 
-DEBUG = True
-
-
-ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
@@ -29,6 +26,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -57,12 +55,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'news_portal.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+
 
 AUTH_USER_MODEL = "newspaper.Redactor"
 
@@ -96,6 +89,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
+STATIC_ROOT = 'staticfiles/'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 
