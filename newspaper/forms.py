@@ -1,59 +1,8 @@
 from django import forms
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm
 from django.forms.widgets import CheckboxSelectMultiple
+from django.utils import timezone
 
 from .models import Newspaper
-
-
-User = get_user_model()
-
-
-class RedactorCreationForm(UserCreationForm):
-    years_of_experience = forms.IntegerField(min_value=0)
-
-    class Meta(UserCreationForm.Meta):
-        model = User
-        fields = (
-            "username",
-            "first_name",
-            "last_name",
-            "email",
-            "years_of_experience",
-            "password1",
-            "password2"
-        )
-
-    def clean_years_of_experience(self):
-        years = self.cleaned_data.get("years_of_experience")
-
-        if years is not None and not 0 <= years <= 80:
-            raise forms.ValidationError(
-                "Years of experience must be between 0 and 80"
-            )
-        return years
-
-
-class RedactorUpdateForm(forms.ModelForm):
-
-    class Meta:
-        model = User
-        fields = (
-            "username",
-            "first_name",
-            "last_name",
-            "email",
-            "years_of_experience",
-        )
-
-    def clean_years_of_experience(self):
-        years = self.cleaned_data.get("years_of_experience")
-
-        if years is not None and not 0 <= years <= 80:
-            raise forms.ValidationError(
-                "Years of experience must be between 0 and 80"
-            )
-        return years
 
 
 class NewspaperForm(forms.ModelForm):
@@ -77,3 +26,14 @@ class NewspaperForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["topic"].empty_label = "Select topic"
+
+    def clean_published_date(self):
+        published_date = self.cleaned_data.get("published_date")
+        today = timezone.now().date()
+
+        if published_date and published_date < today:
+            raise forms.ValidationError(
+                "Published date cannot be in the past."
+            )
+
+        return published_date

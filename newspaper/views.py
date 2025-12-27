@@ -5,10 +5,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.db.models import Q
 
-from .forms import (RedactorCreationForm,
-                    RedactorUpdateForm,
-                    NewspaperForm
-                    )
+from .forms import NewspaperForm
 from .models import Newspaper, Topic
 
 User = get_user_model()
@@ -137,49 +134,3 @@ class TopicDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("newspaper:topic-list")
 
 
-class RedactorListView(LoginRequiredMixin, generic.ListView):
-    model = User
-    context_object_name = "redactor_list"
-    template_name = "newspaper/redactor_list.html"
-    paginate_by = 7
-
-    def get_queryset(self):
-        queryset = User.objects.all().order_by("-years_of_experience")
-
-        query = self.request.GET.get("q")
-        if query:
-            queryset = queryset.filter(
-                Q(username__icontains=query) |
-                Q(first_name__icontains=query) |
-                Q(last_name__icontains=query)
-            )
-        return queryset
-
-
-class RedactorDetailView(LoginRequiredMixin, generic.DetailView):
-    model = User
-    context_object_name = "redactor"
-    template_name = "newspaper/redactor_detail.html"
-
-    def get_queryset(self):
-        return User.objects.prefetch_related("newspapers")
-
-
-class RedactorCreateView(LoginRequiredMixin, generic.CreateView):
-    model = User
-    form_class = RedactorCreationForm
-    template_name = "newspaper/redactor_form.html"
-    success_url = reverse_lazy("newspaper:redactor-list")
-
-
-class RedactorUpdateView(LoginRequiredMixin, generic.UpdateView):
-    model = User
-    form_class = RedactorUpdateForm
-    template_name = "newspaper/redactor_form.html"
-    success_url = reverse_lazy("newspaper:redactor-list")
-
-
-class RedactorDeleteView(LoginRequiredMixin, generic.DeleteView):
-    model = User
-    template_name = "newspaper/redactor_confirm_delete.html"
-    success_url = reverse_lazy("newspaper:redactor-list")

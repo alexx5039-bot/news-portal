@@ -28,7 +28,7 @@ class RedactorModelCase(TestCase):
         )
         self.assertEqual(
             redactor.get_absolute_url(),
-            reverse("newspaper:redactor-detail", args=[redactor.id])
+            reverse("accounts:redactor-detail", args=[redactor.id])
         )
 
 

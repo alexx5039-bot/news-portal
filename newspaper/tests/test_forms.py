@@ -1,32 +1,10 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from newspaper.forms import (RedactorCreationForm,
-                             NewspaperForm)
-
+from newspaper.forms import NewspaperForm
+from django.utils import timezone
 from newspaper.models import Topic
 
 User = get_user_model()
-
-
-class RedactorCreationFormTest(TestCase):
-
-    def test_form_valid(self):
-        form = RedactorCreationForm(data={
-            "username": "john",
-            "password1": "StrongPass123!",
-            "password2": "StrongPass123!",
-            "years_of_experience": 10
-        })
-        self.assertTrue(form.is_valid())
-
-    def test_years_of_experience_too_big(self):
-        form = RedactorCreationForm(data={
-            "username": "john",
-            "password1": "StrongPass123!",
-            "password2": "StrongPass123!",
-            "years_of_experience": 100
-        })
-        self.assertFalse(form.is_valid())
 
 
 class NewspaperFormTest(TestCase):
@@ -40,8 +18,12 @@ class NewspaperFormTest(TestCase):
         form = NewspaperForm(data={
             "title": "football",
             "content": "News",
-            "published_date": "2024-01-01",
+            "published_date": timezone.now().date(),
             "topic": topic.id,
             "publishers": [redactor.id]
         })
         self.assertTrue(form.is_valid())
+
+        newspaper = form.save()
+        self.assertEqual(newspaper.title, "football")
+        self.assertIn(redactor, newspaper.publishers.all())

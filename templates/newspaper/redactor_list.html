@@ -26,7 +26,7 @@
 
  <div class="d-flex justify-content-between align-items-center mb-4">
     <h1>Redactors</h1>
-    <a href="{% url 'newspaper:redactor-create' %}" class="btn btn-success">
+    <a href="{% url 'accounts:redactor-create' %}" class="btn btn-success">
         + Create redactor
     </a>
 </div>
@@ -44,7 +44,7 @@
             {% for redactor in redactor_list %}
                 <tr>
                     <td>
-                        <a href="{% url 'newspaper:redactor-detail' redactor.pk %}">
+                        <a href="{% url 'accounts:redactor-detail' redactor.pk %}">
                             {{ redactor.username }}
                         </a>
                     </td>

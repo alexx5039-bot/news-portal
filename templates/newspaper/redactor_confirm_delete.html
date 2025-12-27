@@ -12,13 +12,13 @@
 
             <p>
                 Are you sure you want to delete redactor
-                <strong>"{{ redactor.username }}"</strong>?
+                <strong>"{{ object.username }}"</strong>?
             </p>
 
             <form method="post">
                 {% csrf_token %}
                 <div class="d-flex justify-content-between mt-4">
-                    <a href="{% url 'newspaper:redactor-detail' redactor.pk %}" class="btn btn-secondary">
+                    <a href="{% url 'accounts:redactor-detail' object.pk %}" class="btn btn-secondary">
                         Cancel
                     </a>
                     <button type="submit" class="btn btn-danger">
