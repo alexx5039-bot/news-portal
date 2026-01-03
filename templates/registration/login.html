@@ -11,7 +11,7 @@
                 Login
             </h3>
 
-            <form method="post">
+            <form method="post" autocomplete="off">
                 {% csrf_token %}
                 {{ form|crispy }}
 
@@ -19,6 +19,14 @@
                     Login
                 </button>
             </form>
+        <div class="text-center mt-3">
+                <small>
+                    Don’t have an account?
+                    <a href="{% url 'accounts:register' %}">
+                        Register here
+                    </a>
+                </small>
+            </div>
         </div>
     </div>
 </div>

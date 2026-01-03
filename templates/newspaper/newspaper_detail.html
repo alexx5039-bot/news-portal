@@ -29,13 +29,21 @@
             ← Back
         </a>
 
-        <a href="{% url 'newspaper:newspaper-update' newspaper.pk %}" class="btn btn-warning">
-            ✏️ Edit
-        </a>
+        {% if user.is_superuser or user in newspaper.publishers.all %}
+            <a href="{% url 'newspaper:newspaper-update' newspaper.pk %}"
+               class="btn btn-warning">
+                ✏️ Edit
+            </a>
 
-        <a href="{% url 'newspaper:newspaper-delete' newspaper.pk %}" class="btn btn-danger">
-            🗑 Delete
-        </a>
+            <a href="{% url 'newspaper:newspaper-delete' newspaper.pk %}"
+               class="btn btn-danger">
+                🗑 Delete
+            </a>
+        {% else %}
+            <span class="text-muted ms-2 fst-italic">
+                You don’t have permission to edit or delete this newspaper.
+            </span>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

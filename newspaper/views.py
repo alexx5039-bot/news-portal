@@ -4,7 +4,7 @@ from django.db.models import Count
 from django.urls import reverse_lazy
 from django.views import generic
 from django.db.models import Q
-
+from .mixins import SuperuserOrPublisherQuerysetMixin
 from .forms import NewspaperForm
 from .models import Newspaper, Topic
 
@@ -71,14 +71,22 @@ class NewspaperCreateView(LoginRequiredMixin, generic.CreateView):
     success_url = reverse_lazy("newspaper:newspaper-list")
 
 
-class NewspaperUpdateView(LoginRequiredMixin, generic.UpdateView):
+class NewspaperUpdateView(
+    LoginRequiredMixin,
+    SuperuserOrPublisherQuerysetMixin,
+    generic.UpdateView
+):
     model = Newspaper
     form_class = NewspaperForm
     template_name = "newspaper/newspaper_form.html"
     success_url = reverse_lazy("newspaper:newspaper-list")
 
 
-class NewspaperDeleteView(LoginRequiredMixin, generic.DeleteView):
+class NewspaperDeleteView(
+    LoginRequiredMixin,
+    SuperuserOrPublisherQuerysetMixin,
+    generic.DeleteView
+):
     model = Newspaper
     template_name = "newspaper/newspaper_confirm_delete.html"
     success_url = reverse_lazy("newspaper:newspaper-list")
@@ -132,5 +140,3 @@ class TopicDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Topic
     template_name = "newspaper/topic_confirm_delete.html"
     success_url = reverse_lazy("newspaper:topic-list")
-
-
